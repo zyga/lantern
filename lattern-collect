@@ -1,0 +1,27 @@
+#!/bin/sh
+# Basic backlight data collection script for Lattern
+# Written by Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+set -x
+id=$(cat /proc/sys/kernel/random/uuid)
+dest=$(mktemp -d --suffix=-lattern)
+lspci > "$dest/lspci"
+lsmod > "$dest/lsmod"
+uname -a > "$dest/uname"
+if [ -e /etc/os-release ]; then
+    cp /etc/os-release "$dest/"
+fi
+SCB=/sys/class/backlight
+if [ -e $SCB ]; then
+    mkdir "$dest/backlight"
+    for device in $(ls $SCB); do
+        device_dest="$dest/backlight/$device"
+        mkdir "$device_dest"
+        cp "$SCB/$device/max_brightness" "$device_dest/"
+        cp "$SCB/$device/actual_brightness" "$device_dest/"
+        cp "$SCB/$device/brightness" "$device_dest/"
+        cp "$SCB/$device/type" "$device_dest/"
+    done
+fi
+tar -Jcf "lattern-submission-$id.tar.xz" -C "$dest" .
+rm -rf "$dest"
+echo -- "$id"
