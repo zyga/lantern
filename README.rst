@@ -52,9 +52,11 @@ With extra hardware
 Windows Factor
 --------------
 
-- What are the requirements of Windows hardware certification programme on the backlight interface?
+- What are the requirements of Windows hardware certification programme on the
+  backlight interface?
 - What does ACPI say about brightness? (this is a personal learning goal)
-- Are the values reported by Windows (using standard Windows APIs) identical to what Linux sees?
+- Are the values reported by Windows (using standard Windows APIs) identical to
+  what Linux sees?
 
 Android Factor
 --------------
