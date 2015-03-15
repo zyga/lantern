@@ -10,7 +10,7 @@ TODO
 ====
 
 If you are interested in contributing you can start by following this list, any
-idea is good though, just open issues, talk to us on IRC (#checkbox on
+idea is good though, just open issues, talk to us on IRC (``#checkbox`` on
 freenode) or send emails to Zygmunt Krynicki
 zygmunt<dot>krynicki<at>canonical.com
 
@@ -28,15 +28,15 @@ Open Questions
 Basics
 ------
 
-- What are the values of /sys/class/backlight/*/max_brightness as seen in the
-  wild?
+- What are the values of ``/sys/class/backlight/*/max_brightness`` as seen in
+  the wild?
 - What is the usage ratio of each of the three possible values of
-  /sys/class/backlight/*/type (raw,firmware,platform)?
-- When /sys/class/*/actual_brightness is zero is the backlight off or just very
-  dim?
-- Do /sys/class/*/{actual_,brightness} agree when using hardware brightness
+  ``/sys/class/backlight/*/type`` (``raw``, ``firmware``, ``platform``)?
+- When ``/sys/class/*/actual_brightness`` is zero is the backlight off or just
+  very dim?
+- Do ``/sys/class/*/{actual_,brightness}`` agree when using hardware brightness
   control keys?
-- Do /sys/class/*/{actual_,brightness} change when using the hardware
+- Do ``/sys/class/*/{actual_,brightness}`` change when using the hardware
   brightness control keys? 
 - Does the firmware remember the value set by hardware brightness control keys?
 - What is the value after reboot?
@@ -45,9 +45,9 @@ Basics
 With extra hardware
 -------------------
 
-- What is the plot of distinct values of /sys/class/backlight/*/brightness over
-  emitted light?
-- Is there off-the-shelf hardware that can measure it?
+- What is the plot of distinct values of ``/sys/class/backlight/*/brightness``
+  over emitted light?
+- Is there *off-the-shelf* hardware that can measure it?
 
 Windows Factor
 --------------
