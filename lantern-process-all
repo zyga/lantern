@@ -1,4 +1,21 @@
 #!/bin/sh
+# This file is part of Lantern.
+#
+# Copyright 2015 Canonical Ltd.
+# Written by:
+#   Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+#
+# Lantern is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3,
+# as published by the Free Software Foundation.
+#
+# Lantern is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Lantern.  If not, see <http://www.gnu.org/licenses/>.
 for sub in submissions/*.tar.xz; do 
     if [ ! -e $sub.json ]; then
         ./lantern-process $sub -o $sub.json -m;
