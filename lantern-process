@@ -1,0 +1,60 @@
+#!/usr/bin/env python3
+# Convert a Lantern submission tarball to JSON
+# Written by Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+import argparse
+import collections
+import json
+import sys
+import tarfile
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'submission', type=argparse.FileType('rb'), action='store',
+        metavar='TARBALL', help="submission tarball to process")
+    parser.add_argument(
+        '-m', '--with-meta-data', action='store_true',
+        help="extract submission meta-data")
+    parser.add_argument(
+        '-o', '--output', type=argparse.FileType('wt'),
+        default=sys.stdout, help="write JSON to this file")
+    ns = parser.parse_args()
+    if not tarfile.is_tarfile(ns.submission.name):
+        parser.error("submission is not a tarball")
+    data = collections.defaultdict(lambda: collections.defaultdict(dict))
+    with tarfile.open(fileobj=ns.submission, mode='r:*') as tarball:
+        for member in tarball.getmembers():
+            name_path = member.name.split('/')
+            if not name_path[0] == '.':
+                continue
+            if not member.isreg():
+                continue
+            if len(name_path) == 4 and name_path[1] == 'backlight':
+                bl_id = name_path[2]
+                bl_prop_name = name_path[3]
+                bl_prop_value = (
+                    tarball.extractfile(member).read().decode('UTF-8').strip()
+                )
+                try:
+                    bl_prop_value = int(bl_prop_value, 10)
+                except ValueError:
+                    pass
+                backlight = data['backlight']
+                backlight[bl_id][bl_prop_name] = bl_prop_value
+            elif len(name_path) == 2:
+                if not ns.with_meta_data:
+                    continue
+                meta_prop_name = name_path[1]
+                meta_prop_value = (
+                    tarball.extractfile(member).read().decode('UTF-8').strip()
+                )
+                metadata = data['metadata']
+                metadata[meta_prop_name] = meta_prop_value
+    json.dump(
+        data, ns.output, indent=2, separators=(', ', ': '),
+        default=lambda obj: dict(obj))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
