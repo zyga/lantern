@@ -1,0 +1,8 @@
+{
+  "metadata": {
+    "lspci": "", 
+    "uname": "Linux ubuntu-phablet 3.4.67 #1 SMP PREEMPT Wed Feb 25 19:58:50 UTC 2015 armv7l armv7l armv7l GNU/Linux", 
+    "os-release": "NAME=\"Ubuntu RTM\"\nVERSION=\"14.09\"\nID=ubuntu\nID_LIKE=debian\nPRETTY_NAME=\"Ubuntu RTM 14.09\"\nVERSION_ID=\"14.09\"\nHOME_URL=\"http://www.ubuntu.com/\"\nSUPPORT_URL=\"http://help.ubuntu.com/\"\nBUG_REPORT_URL=\"http://bugs.launchpad.net/ubuntu-rtm/\"", 
+    "lsmod": "Module                  Size  Used by"
+  }
+}
