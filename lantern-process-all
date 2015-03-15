@@ -1,0 +1,4 @@
+#!/bin/sh
+for sub in submissions/*.tar.xz; do 
+    ./lantern-process $sub -o $sub.json -m;
+done
