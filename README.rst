@@ -46,7 +46,7 @@ With extra hardware
 -------------------
 
 - What is the plot of distinct values of ``/sys/class/backlight/*/brightness``
-  over emitted light?
+  against emitted light?
 - Is there *off-the-shelf* hardware that can measure it?
 
 Windows Factor
