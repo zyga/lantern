@@ -1,4 +1,6 @@
 #!/bin/sh
 for sub in submissions/*.tar.xz; do 
-    ./lantern-process $sub -o $sub.json -m;
+    if [ ! -e $sub.json ]; then
+        ./lantern-process $sub -o $sub.json -m;
+    fi
 done
