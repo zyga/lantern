@@ -1,0 +1,6 @@
+#!/bin/sh
+for sub in $(ls submissions/); do 
+    if echo $sub | grep -q lattern; then
+        mv "$sub" "$(echo $sub | sed -e 's/lattern/lantern/g')"
+    fi
+done
