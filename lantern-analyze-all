@@ -32,14 +32,14 @@ def main():
     stat_fns = ("mean", "median", "median_low", "median_high",
                 "median_grouped", "mode", "pstdev", "pvariance", "stdev",
                 "variance",)
-    for item in os.listdir('submissions'):
+    for item in sorted(os.listdir('submissions')):
         if not item.endswith('.json'):
             continue
         filename = os.path.join('submissions', item)
         with open(filename, 'rt', encoding='UTF-8') as stream:
             data = json.load(stream)
         try:
-            bl_id_list = data['backlight']
+            bl_id_list = sorted(data['backlight'])
         except KeyError:
             continue
         for bl_id in bl_id_list:
@@ -52,7 +52,7 @@ def main():
                     population[prop].append(value)
         population['num-devices'].append(len(bl_id_list))
 
-    for prop in population.keys():
+    for prop in sorted(population.keys()):
         print("[{}]".format(prop))
         print("population size", len(population[prop]))
         print("population: ", population[prop])
