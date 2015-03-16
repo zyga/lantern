@@ -1,0 +1,16 @@
+{
+  "backlight": {
+    "radeon_bl0": {
+      "actual_brightness": 200, 
+      "type": "raw", 
+      "max_brightness": 255, 
+      "brightness": 200
+    }
+  }, 
+  "metadata": {
+    "uname": "Linux lejenome 3.19.1-1-ARCH #1 SMP PREEMPT Thu Mar 12 09:33:36 CET 2015 x86_64 GNU/Linux", 
+    "lsmod": "Module                  Size  Used by", 
+    "os-release": "NAME=\"Arch Linux\"\nID=arch\nPRETTY_NAME=\"Arch Linux\"\nANSI_COLOR=\"0;36\"\nHOME_URL=\"https://www.archlinux.org/\"\nSUPPORT_URL=\"https://bbs.archlinux.org/\"\nBUG_REPORT_URL=\"https://bugs.archlinux.org/\"", 
+    "lspci": "00:00.0 Host bridge: Intel Corporation 3rd Gen Core processor DRAM Controller (rev 09)\n00:01.0 PCI bridge: Intel Corporation Xeon E3-1200 v2/3rd Gen Core processor PCI Express Root Port (rev 09)\n00:16.0 Communication controller: Intel Corporation 7 Series/C210 Series Chipset Family MEI Controller #1 (rev 04)\n00:1a.0 USB controller: Intel Corporation 7 Series/C210 Series Chipset Family USB Enhanced Host Controller #2 (rev 04)\n00:1b.0 Audio device: Intel Corporation 7 Series/C210 Series Chipset Family High Definition Audio Controller (rev 04)\n00:1c.0 PCI bridge: Intel Corporation 7 Series/C210 Series Chipset Family PCI Express Root Port 1 (rev c4)\n00:1c.1 PCI bridge: Intel Corporation 7 Series/C210 Series Chipset Family PCI Express Root Port 2 (rev c4)\n00:1c.2 PCI bridge: Intel Corporation 7 Series/C210 Series Chipset Family PCI Express Root Port 3 (rev c4)\n00:1d.0 USB controller: Intel Corporation 7 Series/C210 Series Chipset Family USB Enhanced Host Controller #1 (rev 04)\n00:1f.0 ISA bridge: Intel Corporation HM76 Express Chipset LPC Controller (rev 04)\n00:1f.2 SATA controller: Intel Corporation 7 Series Chipset Family 6-port SATA Controller [AHCI mode] (rev 04)\n00:1f.3 SMBus: Intel Corporation 7 Series/C210 Series Chipset Family SMBus Controller (rev 04)\n01:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Thames [Radeon HD 7500M/7600M Series]\n01:00.1 Audio device: Advanced Micro Devices, Inc. [AMD/ATI] Turks/Whistler HDMI Audio [Radeon HD 6000 Series]\n08:00.0 Network controller: Qualcomm Atheros AR9485 Wireless Network Adapter (rev 01)\n09:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 07)"
+  }
+}
