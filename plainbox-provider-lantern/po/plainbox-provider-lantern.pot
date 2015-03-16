@@ -1,0 +1,351 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-03-16 19:59+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. summary
+#: ../units/meta.pxu:23
+msgid "Attach the contents of /etc/os-release"
+msgstr ""
+
+#. description
+#: ../units/meta.pxu:25
+msgid ""
+"This job attaches the os-release(1) file. This file contains basic "
+"information about the software platform of modern Linux distributions."
+msgstr ""
+
+#. summary
+#: ../units/meta.pxu:40
+msgid "Attach the contents of /proc/cmdline"
+msgstr ""
+
+#. description
+#: ../units/meta.pxu:42
+msgid ""
+"This job attaches the contents of /proc/cmdline which may contain entries "
+"relevant to backlight quirks (like backlight=vendor)."
+msgstr ""
+
+#. summary
+#: ../units/meta.pxu:57
+msgid "Attach the output of \"lsb_release\""
+msgstr ""
+
+#. description
+#: ../units/meta.pxu:59
+msgid ""
+"This job attaches the output of lsb_release(1). This command is pre-"
+"installed on some older systems that might lack /etc/os-release."
+msgstr ""
+
+#. summary
+#: ../units/meta.pxu:74
+msgid "Attach the output of \"dmesg\""
+msgstr ""
+
+#. description
+#: ../units/meta.pxu:76
+msgid ""
+"This job attaches the output of dmesg(1) which prints the contents of the "
+"kernel ring bugger. Data contained in dmesg(1) can help individual case-by-"
+"case analysis as it contains useful boot-up log messages."
+msgstr ""
+
+#. summary
+#: ../units/meta.pxu:92
+msgid "Attach the output of \"uname -r\""
+msgstr ""
+
+#. description
+#: ../units/meta.pxu:94
+msgid ""
+"This job attaches the output of uname(1) which prints the version of the "
+"running kernel. This is essential in correlating observed behavior with a "
+"particular version of the Linux kernel as subsequent versions often contain "
+"fixes that alter the observed behavior of the backlight subsystem."
+msgstr ""
+
+#. summary
+#: ../units/meta.pxu:111
+msgid "Attach the output of \"lsmod\""
+msgstr ""
+
+#. description
+#: ../units/meta.pxu:113
+msgid ""
+"This job attaches the output of lsmod(8) which prints all of the kernel "
+"modules linked into the kernel. This information is useful to determine if "
+"proprietary driver was being used for driving the graphics card."
+msgstr ""
+
+#. summary
+#: ../units/probe.pxu:26
+msgid "Determine which tools are available"
+msgstr ""
+
+#. description
+#: ../units/probe.pxu:28
+msgid ""
+"This resource job checks if a number of tools, such as lsb_release, dmesg, "
+"uname or lsmod are available in PATH. It is used as a requirement for "
+"software probing jobs."
+msgstr ""
+
+#. summary
+#: ../units/probe.pxu:55
+msgid "Determine which relevant filesystem entries are available"
+msgstr ""
+
+#. description
+#: ../units/probe.pxu:57
+msgid ""
+"This resource job checks if some of the files and directories we want to "
+"attach are available. Currently this only includes the checks for /etc/os-"
+"release, /sys and /proc."
+msgstr ""
+
+#. summary
+#: ../units/probe.pxu:79
+msgid "Enumerate available backlight devices"
+msgstr ""
+
+#. description
+#: ../units/probe.pxu:81
+msgid ""
+"This resource job looks at /sys/class/backlight and creates resource records "
+"for each one.  Each record contains keys: path, name and device. They are "
+"described below:"
+msgstr ""
+
+#. description
+#: ../units/probe.pxu:81
+msgid ""
+"path: absolute path to the /sys/class/backlight/... entry name: the last "
+"component of path device: the destination of the symbolic link that path is "
+"sysfs_actual_brightness: contents of /sys/class/backlight/*/"
+"actual_brightness sysfs_brightness: contents of /sys/class/backlight/*/"
+"brightness sysfs_max_brightness: contents of /sys/class/backlight/*/"
+"max_brightness sysfs_type: contents of /sys/class/backlight/*/type"
+msgstr ""
+
+#. summary
+#: ../units/sysfs.pxu:27
+msgid "Attach the contents of {path}/type"
+msgstr ""
+
+#. summary
+#: ../units/sysfs.pxu:46
+msgid "Attach the contents of {path}/max_brightness"
+msgstr ""
+
+#. description
+#: ../units/sysfs.pxu:48
+msgid ""
+"This job attaches the contents of {path} so that it can be analyzed later. "
+"The type of each backlight device is crucial in determining how software "
+"control works when faced with multiple devices."
+msgstr ""
+
+#. summary
+#: ../units/sysfs.pxu:65
+msgid "Attach the contents of {path}/brightness"
+msgstr ""
+
+#. description
+#: ../units/sysfs.pxu:67
+msgid ""
+"This job attaches the contents of {path}/brightness so that it can be "
+"analyzed later. This differs from the \"actual\" brightness in that it may "
+"be a value cached by the driver and that it may disagree with the actual "
+"setting as set in the hardware."
+msgstr ""
+
+#. summary
+#: ../units/sysfs.pxu:85
+msgid "Attach the contents of {path}/actual_brightness"
+msgstr ""
+
+#. description
+#: ../units/sysfs.pxu:87
+msgid ""
+"This job attaches the contents of {path}/actual_brightness so that it can be "
+"analyzed later. This differs from the \"plain\" brightness in that it always "
+"queries the hardware rather than using a cached value that the driver "
+"remembers."
+msgstr ""
+
+#. name
+#: ../units/testplans.pxu:20
+msgid "Probe all of the system meta-data configuration"
+msgstr ""
+
+#. description
+#: ../units/testplans.pxu:21
+msgid ""
+"This test plan contains all of the meta-data collecting components of "
+"Lantern. It doesn't actually involve checking how brightness works."
+msgstr ""
+
+#. name
+#: ../units/testplans.pxu:30
+msgid "Run all of the Lantern tests"
+msgstr ""
+
+#. summary
+#: ../units/tests.pxu:25
+msgid "Test if software brightness control works [{name}]"
+msgstr ""
+
+#. purpose
+#: ../units/tests.pxu:27
+msgid ""
+"The goal of this test is to check if the software brightness control of "
+"{name} works. The test carefully skips the brightness of zero which is "
+"tested separately."
+msgstr ""
+
+#. purpose
+#: ../units/tests.pxu:27
+msgid ""
+"This test will smoothly change the brightness of the screen from minimum to "
+"maximum and back to minimum again. Regardless of what the hardware supports "
+"each sweep direction will take three seconds. When the test is complete the "
+"brightness will be restored to original value."
+msgstr ""
+
+#. steps
+#: ../units/tests.pxu:36
+msgid ""
+"- observe the screen - note if the brightness was changing smoothly during "
+"the test"
+msgstr ""
+
+#. verification
+#: ../units/tests.pxu:39
+msgid "Did you observe clear change in screen brightness?"
+msgstr ""
+
+#. summary
+#: ../units/tests.pxu:62
+msgid "Test if brightness=0 keeps panel backlight enabled [{name}]"
+msgstr ""
+
+#. purpose
+#: ../units/tests.pxu:64
+msgid ""
+"The goal of this test is to see what happens when brightness of is set to "
+"zero. Some devices will turn the panel backlight off entirely while others "
+"just set it to some dim but still visible backlight.  Note that even if the "
+"screen is totally black you may see the contents of screen if some external "
+"light is shining directly at the panel. This does not affect the behavior of "
+"the test."
+msgstr ""
+
+#. steps
+#: ../units/tests.pxu:71
+msgid ""
+"This test will be executed in steps. The brightness will be set to zero, "
+"there will be a brief pause and the original brightness will be restored. "
+"Please just observe the screen for that moment:"
+msgstr ""
+
+#. verification
+#: ../units/tests.pxu:75
+msgid "Was the backlight dim (or very dim) but still visible?"
+msgstr ""
+
+#. summary
+#: ../units/tests.pxu:92
+msgid "Restore original brightness of {name} (after all tests)"
+msgstr ""
+
+#. description
+#: ../units/tests.pxu:94
+msgid ""
+"This job restores the original brightness of device {path} so that "
+"(hopefully) anything we did while testing is not an inconvenience to the "
+"user. It is done as a safety net in case all the other attempts fail."
+msgstr ""
+
+#: ../bin/brightness-sweep:32
+msgid "DEVICE"
+msgstr ""
+
+#: ../bin/brightness-sweep:36
+msgid "Duration of the sweep phase"
+msgstr ""
+
+#: ../bin/brightness-sweep:44
+msgid "Number of brightness steps: {}"
+msgstr ""
+
+#: ../bin/brightness-sweep:46
+msgid "Doing a RISING {}s sweep of available brightness values"
+msgstr ""
+
+#: ../bin/brightness-sweep:56
+msgid "Actual duration of the raising sweep: {:f}s"
+msgstr ""
+
+#: ../bin/brightness-sweep:58
+msgid "Doing a FALLING {}s sweep of available brightness values"
+msgstr ""
+
+#: ../bin/brightness-sweep:68
+msgid "Actual duration of the falling sweep: {:f}s"
+msgstr ""
+
+#: ../bin/brightness-sweep:71
+msgid "Restoring original brightness"
+msgstr ""
+
+#: ../bin/brightness-sweep:73
+msgid "Test complete"
+msgstr ""
+
+#: ../bin/brightness-sweep:84
+msgid "no such device: {!r}"
+msgstr ""
+
+#: ../bin/brightness-sweep:161
+msgid ""
+"Environment variable not defined: PLAINBOX_SESSION_SHARE\n"
+"This usually means that a program was started outside of the plainbox "
+"runtime environment."
+msgstr ""
+
+#: ../bin/brightness-sweep:178
+msgid "Unable to load plainbox session file {!r}: {!r}"
+msgstr ""
+
+#: ../manage.py:44
+msgid ""
+"\n"
+"    run all of the lantern tests\n"
+"\n"
+"    @EPILOG@\n"
+"\n"
+"    This command is similar to a hard-coded version of ``plainbox run``\n"
+"    that has the lantern testing provider installed and runs the\n"
+"    'all-tests' test plan from the same provider.\n"
+"    "
+msgstr ""
+
+#: ../manage.py:83
+msgid "Lantern Brightness Analysis and Debugging"
+msgstr ""

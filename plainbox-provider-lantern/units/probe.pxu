@@ -1,0 +1,98 @@
+# This file is part of Lantern.
+#
+# Copyright 2015 Canonical Ltd.
+# Written by:
+#   Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+#
+# Lantern is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3,
+# as published by the Free Software Foundation.
+#
+# Lantern is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Lantern.  If not, see <http://www.gnu.org/licenses/>.
+unit: job
+id: probe/tools
+plugin: resource
+command:
+ echo "lsb_release: $(which lsb_release)"
+ echo "dmesg: $(which dmesg)"
+ echo "uname: $(which uname)"
+ echo "lsmod: $(which lsmod)"
+_summary:
+ Determine which tools are available
+_description:
+ This resource job checks if a number of tools, such as lsb_release, dmesg,
+ uname or lsmod are available in PATH. It is used as a requirement for software
+ probing jobs.
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.2
+
+unit: job
+id: probe/fs
+plugin: resource
+command:
+ if [ -e /etc/os-release ]; then
+     echo "has_os_release: yes"
+ else
+     echo "has_os_release: no"
+ fi
+ if [ -d /sys ]; then
+     echo "has_sysfs: yes"
+ else
+     echo "has_sysfs: no"
+ fi
+ if [ -d /proc ]; then
+     echo "has_procfs: yes"
+ else
+     echo "has_procfs: no"
+ fi
+_summary:
+ Determine which relevant filesystem entries are available
+_description:
+ This resource job checks if some of the files and directories we want to
+ attach are available. Currently this only includes the checks for
+ /etc/os-release, /sys and /proc.
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.2
+
+unit: job
+id: probe/backlight_device
+plugin: resource
+command:
+ for bl_path in $(find -L /sys/class/backlight -mindepth 1 -maxdepth 1 -type d); do
+     echo "path: $bl_path"
+     echo "name: $(basename $bl_path)"
+     echo "device: $(readlink $bl_path)"
+     echo "sysfs_actual_brightness: $(cat $bl_path/actual_brightness)"
+     echo "sysfs_brightness: $(cat $bl_path/brightness)"
+     echo "sysfs_max_brightness: $(cat $bl_path/max_brightness)"
+     echo "sysfs_type: $(cat $bl_path/type)"
+     echo
+ done
+_summary:
+ Enumerate available backlight devices
+_description:
+ This resource job looks at /sys/class/backlight and creates resource records
+ for each one.  Each record contains keys: path, name and device. They are
+ described below:
+ .
+ path: absolute path to the /sys/class/backlight/... entry
+ name: the last component of path
+ device: the destination of the symbolic link that path is
+ sysfs_actual_brightness: contents of /sys/class/backlight/*/actual_brightness
+ sysfs_brightness: contents of /sys/class/backlight/*/brightness
+ sysfs_max_brightness: contents of /sys/class/backlight/*/max_brightness
+ sysfs_type: contents of /sys/class/backlight/*/type
+imports:
+ from 2015.pl.zygoon.lantern import probe/fs as fs
+requires: fs.has_sysfs == 'yes'
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.2

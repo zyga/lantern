@@ -1,0 +1,8 @@
+[encoding: UTF-8]
+[type: gettext/rfc822deb] units/meta.pxu
+[type: gettext/rfc822deb] units/probe.pxu
+[type: gettext/rfc822deb] units/sysfs.pxu
+[type: gettext/rfc822deb] units/testplans.pxu
+[type: gettext/rfc822deb] units/tests.pxu
+bin/brightness-sweep
+manage.py

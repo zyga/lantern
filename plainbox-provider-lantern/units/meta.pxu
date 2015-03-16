@@ -1,0 +1,122 @@
+# This file is part of Lantern.
+#
+# Copyright 2015 Canonical Ltd.
+# Written by:
+#   Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+#
+# Lantern is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3,
+# as published by the Free Software Foundation.
+#
+# Lantern is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Lantern.  If not, see <http://www.gnu.org/licenses/>.
+unit: job
+id: metadata/os-release
+plugin: attachment
+command:
+ cat /etc/os-release
+_summary:
+ Attach the contents of /etc/os-release
+_description:
+ This job attaches the os-release(1) file. This file contains basic information
+ about the software platform of modern Linux distributions.
+imports:
+ from 2015.pl.zygoon.lantern import probe/fs as fs
+requires: fs.has_os_release
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.2
+
+unit: job
+id: metadata/cmdline
+plugin: attachment
+command:
+ cat /proc/cmdline
+_summary:
+ Attach the contents of /proc/cmdline
+_description:
+ This job attaches the contents of /proc/cmdline which may contain entries
+ relevant to backlight quirks (like backlight=vendor).
+imports:
+ from 2015.pl.zygoon.lantern import probe/fs as fs
+requires: fs.has_procfs == 'yes'
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.3
+
+unit: job
+id: metadata/lsb_release
+plugin: attachment
+command:
+ lsb_release -a
+_summary:
+ Attach the output of "lsb_release"
+_description:
+ This job attaches the output of lsb_release(1). This command is pre-installed
+ on some older systems that might lack /etc/os-release.
+imports:
+ from 2015.pl.zygoon.lantern import probe/tools as tools
+requires: tools.lsb_release != ''
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.3
+
+unit: job
+id: metadata/dmesg
+plugin: attachment
+command:
+ dmesg
+_summary:
+ Attach the output of "dmesg"
+_description:
+ This job attaches the output of dmesg(1) which prints the contents of the
+ kernel ring bugger. Data contained in dmesg(1) can help individual
+ case-by-case analysis as it contains useful boot-up log messages.
+imports:
+ from 2015.pl.zygoon.lantern import probe/tools as tools
+requires: tools.dmesg != ''
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.3
+
+unit: job
+id: metadata/uname_r
+plugin: attachment
+command:
+ uname -r
+_summary:
+ Attach the output of "uname -r"
+_description:
+ This job attaches the output of uname(1) which prints the version of the
+ running kernel. This is essential in correlating observed behavior with a
+ particular version of the Linux kernel as subsequent versions often contain
+ fixes that alter the observed behavior of the backlight subsystem.
+imports:
+ from 2015.pl.zygoon.lantern import probe/tools as tools
+requires: tools.uname != ''
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.3
+
+unit: job
+id: metadata/lsmod
+plugin: attachment
+command:
+ lsmod
+_summary:
+ Attach the output of "lsmod"
+_description:
+ This job attaches the output of lsmod(8) which prints all of the kernel
+ modules linked into the kernel. This information is useful to determine if
+ proprietary driver was being used for driving the graphics card.
+imports:
+ from 2015.pl.zygoon.lantern import probe/tools as tools
+requires: tools.lsmod != ''
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::info
+estimated_duration: 0.4

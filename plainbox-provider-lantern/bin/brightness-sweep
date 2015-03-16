@@ -1,0 +1,192 @@
+#!/usr/bin/env python3
+# This file is part of Lantern.
+#
+# Copyright 2015 Canonical Ltd.
+# Written by:
+#   Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+#
+# Lantern is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3,
+# as published by the Free Software Foundation.
+#
+# Lantern is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Lantern.  If not, see <http://www.gnu.org/licenses/>.
+""" Tool for performing a brightness sweep on a given brightness device. """
+import argparse
+import gettext
+import os
+import time
+
+_ = gettext.gettext
+
+
+def main():
+    """ Main function. """
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'path', metavar=_("DEVICE"),
+        help=_('path of /sys/class/backlight/* device'))
+    parser.add_argument(
+        '-s', '--sweep-duration', type=float, default=1,
+        metavar='SECONDS', help=_("Duration of the sweep phase"))
+    ns = parser.parse_args()
+    try:
+        ctrl = BacklightCtrl(ns.path)
+    except ValueError as exc:
+        parser.error(str(exc))
+    stored_brightness = ctrl.brightness
+    n_steps = ctrl.max_brightness
+    print(_("Number of brightness steps: {}").format(n_steps))
+    try:
+        print(_("Doing a RISING {}s sweep of available brightness "
+                "values").format(ns.sweep_duration), flush=True)
+        start = time.monotonic()
+        for step in range(1, n_steps):
+            ctrl.brightness = step
+            now = time.monotonic()
+            desired = start + ns.sweep_duration / n_steps * step
+            if desired > now:
+                time.sleep(desired - now)
+        end = time.monotonic()
+        print(_("Actual duration of the raising sweep: {:f}s").format(
+            end - start))
+        print(_("Doing a FALLING {}s sweep of available brightness "
+                "values").format(ns.sweep_duration), flush=True)
+        start = time.monotonic()
+        for step in range(n_steps, 1, -1):
+            ctrl.brightness = step
+            now = time.monotonic()
+            desired = start + ns.sweep_duration / n_steps * (n_steps - step)
+            if desired > now:
+                time.sleep(desired - now)
+        end = time.monotonic()
+        print(_("Actual duration of the falling sweep: {:f}s").format(
+            end - start))
+    finally:
+        print(_("Restoring original brightness"))
+        ctrl.brightness = stored_brightness
+    print(_("Test complete"))
+
+
+class BacklightCtrl:
+
+    """ Pythonic interface to /sys/class/backlight/*/ files. """
+
+    def __init__(self, base):
+        """ Initialize pythonic interface for a given backlight device. """
+        base = base.rstrip('/')
+        if not os.path.isdir(base):
+            raise ValueError(_("no such device: {!r}").format(base))
+        self.base = base
+        self._max_brightness = None
+
+    def calibrate(self, sample_time=1.0):
+        """ Check how long it takes to perform each change. """
+        value = self.actual_brightness
+        count = 0
+        end = start = time.monotonic()
+        while count == 0 or end - start < sample_time:
+            self.brightness = value
+            end = time.monotonic()
+            count += 1
+        return (end - start) / count
+
+    @property
+    def name(self):
+        """ Name of the backlight device (last part of the directory). """
+        return os.path.basename(self.base)
+
+    @property
+    def type(self):
+        """ Type of the backlight controller. """
+        return self._read_sysfs_attr('type').strip()
+
+    @property
+    def brightness(self):
+        """ Get the current brightness as known to the driver. """
+        return int(self._read_sysfs_attr('brightness'))
+
+    @brightness.setter
+    def brightness(self, value):
+        """ Set the current brightness. """
+        self._write_sysfs_attr('brightness', "{}".format(value))
+
+    @property
+    def max_brightness(self):
+        """ Get the maximum possible brightness. """
+        if self._max_brightness is None:
+            self._max_brightness = int(self._read_sysfs_attr('max_brightness'))
+        return self._max_brightness
+
+    @property
+    def actual_brightness(self):
+        """ Current brightness as measured by the hardware. """
+        return int(self._read_sysfs_attr('actual_brightness'))
+
+    def _read_sysfs_attr(self, attr):
+        with open(os.path.join(self.base, attr), 'rt') as stream:
+            return stream.read()
+
+    def _write_sysfs_attr(self, attr, value):
+        with open(os.path.join(self.base, attr), 'wt') as stream:
+            print(value, file=stream)
+
+    @property
+    def brigthness(self):
+        raise AttributeError("You've misspelled brightness")
+
+    @brigthness.setter
+    def brigthness(self, value):
+        raise AttributeError("You've misspelled brightness")
+
+    @brigthness.deleter
+    def brigthness(self):
+        raise AttributeError("You've misspelled brightness")
+
+
+class PlainboxEnvironment:
+
+    """ Pythonic interface to runtime environment of plainbox jobs. """
+
+    def __init__(self):
+        """ Initialize a new plainbox environment controller. """
+        self._pss = os.getenv("PLAINBOX_SESSION_SHARE")
+        if self._pss is None:
+            raise EnvironmentError(
+                _("Environment variable not defined: PLAINBOX_SESSION_SHARE\n"
+                  "This usually means that a program was started outside "
+                  "of the plainbox runtime environment."))
+
+    @property
+    def PLAINBOX_SESSION_SHARE(self):
+        """ The value of PLAINBOX_SESSION_SHARE environment variable. """
+        return self._pss
+
+    def read_text(self, name):
+        """ Read a session-specific file. """
+        fname = os.path.join(self.PLAINBOX_SESSION_SHARE, name)
+        try:
+            with open(fname, 'rt', encoding='UTF-8') as stream:
+                return stream.read()
+        except (OSError, IOError) as exc:
+            raise ValueError(
+                _("Unable to load plainbox session file {!r}: {!r}").format(
+                    fname, exc))
+
+    def write_text(self, name, text):
+        """ Write a session-specific file. """
+        fname = os.path.join(self.PLAINBOX_SESSION_SHARE, name)
+        with open(fname, 'wt', encoding='UTF-8') as stream:
+            stream.write(text)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        raise SystemExit(1)

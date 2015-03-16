@@ -1,0 +1,99 @@
+# This file is part of Lantern.
+#
+# Copyright 2015 Canonical Ltd.
+# Written by:
+#   Zygmunt Krynicki <zygmunt.krynicki@canonical.com>
+#
+# Lantern is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3,
+# as published by the Free Software Foundation.
+#
+# Lantern is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with Lantern.  If not, see <http://www.gnu.org/licenses/>.
+unit: template
+template-unit: job
+template-resource: probe/backlight_device
+id: test/{name}/software-control
+user: root
+plugin: user-interact-verify
+command: brightness-sweep "{path}" -s 3
+_summary:
+ Test if software brightness control works [{name}]
+_purpose:
+ The goal of this test is to check if the software brightness control of {name}
+ works. The test carefully skips the brightness of zero which is tested
+ separately.
+ .
+ This test will smoothly change the brightness of the screen from minimum to
+ maximum and back to minimum again. Regardless of what the hardware supports
+ each sweep direction will take three seconds. When the test is complete the
+ brightness will be restored to original value.
+_steps:
+ - observe the screen
+ - note if the brightness was changing smoothly during the test
+_verification:
+ Did you observe clear change in screen brightness?
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::video
+estimated_duration: 6
+
+unit: template
+template-unit: job
+template-resource: probe/backlight_device
+# NOTE: I suspect that sysfs_type == 'raw' will always disable the backlight
+# while syssf_type == 'firmware' will keep the screen dim but visible.
+# template-filter: backlight_device.sysfs_type != 'firmware'
+id: test/{name}/brightness-0-is-visible
+user: root
+plugin: user-interact-verify
+depends: "test/{name}/software-control"
+command:
+ printf "$(gettext 'Setting brightness of %s to zero\n')" "{name}"
+ echo 0 > {path}/brightness
+ echo $(gettext "Waiting for a brief moment...")
+ sleep 5
+ echo $(gettext "Restoring original brightness")
+ echo {sysfs_brightness} > {path}/brightness
+_summary:
+ Test if brightness=0 keeps screen backlight enabled [{name}]
+_purpose:
+ The goal of this test is to see what happens when brightness of is set to
+ zero. Some devices will turn the screen backlight off entirely while others
+ just set it to some dim but still visible backlight.  Note that even if the
+ screen is totally black you may see the contents of screen if some external
+ light is shining directly at the screen. This does not affect the behavior of
+ the test.
+_steps:
+ - observe the screen
+ - note if the screen is dim but still visible
+_verification:
+ Was the backlight dim (or very dim) but still visible?
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::video
+estimated_duration: 7
+
+unit: template
+template-unit: job
+template-resource: backlight_device
+template-imports:
+ from 2015.pl.zygoon.lantern import probe/backlight_device as backlight_device
+id: teardown/{name}/restore-brightness
+user: root
+plugin: shell
+command:
+ echo $(gettext "Restoring original brightness")
+ echo {sysfs_brightness} > {path}/brightness
+_summary:
+ Restore original brightness of {name} (after all tests)
+_description:
+ This job restores the original brightness of device {path} so that (hopefully)
+ anything we did while testing is not an inconvenience to the user. It is done
+ as a safety net in case all the other attempts fail.
+flags: preserve-locale
+category_id: 2013.com.canonical.plainbox::video
+estimated_duration: 0.2
