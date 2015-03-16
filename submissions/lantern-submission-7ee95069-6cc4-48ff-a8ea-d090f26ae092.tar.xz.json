@@ -1,0 +1,16 @@
+{
+  "metadata": {
+    "lsmod": "Module                  Size  Used by\nrt2800usb              11748  0 \nrt2800lib              47284  1 rt2800usb\nrt2x00usb               8258  1 rt2800usb\nrt2x00lib              34784  3 rt2x00usb,rt2800lib,rt2800usb\nvfat                    9175  0 \nfat                    46460  1 vfat\nfuse                   65337  2 \nzram                    9133  2 \ncpufreq_powersave        808  0 \nrfcomm                 34055  0 \nbnep                   10164  2 \nbluetooth             145175  10 bnep,rfcomm\nsnd_soc_tegra_alc5632     4506  1 \nsnd_soc_tegra_utils     4419  1 snd_soc_tegra_alc5632\nsnd_seq_dummy           1505  0 \nsnd_soc_spdif           1200  1 \nsnd_soc_alc5632        22450  1 \nregmap_i2c              1365  1 snd_soc_alc5632\nmac80211              265331  3 rt2x00lib,rt2x00usb,rt2800lib\nsnd_seq_oss            34503  0 \nsnd_seq_midi            5202  0 \nsnd_seq_midi_event      5298  2 snd_seq_midi,snd_seq_oss\ncfg80211              169603  2 mac80211,rt2x00lib\nuvcvideo               58050  0 \nvideodev               71734  1 uvcvideo\nsnd_rawmidi            18650  1 snd_seq_midi\nsnd_soc_tegra20_spdif     4294  1 \nsnd_soc_tegra20_i2s     4637  1 \nsnd_soc_tegra20_das     3301  1 snd_soc_tegra20_i2s\nsnd_soc_tegra_pcm       4744  1 \nsnd_soc_core           85074  8 snd_soc_tegra_pcm,snd_soc_tegra20_das,snd_soc_tegra20_i2s,snd_soc_tegra20_spdif,snd_soc_alc5632,snd_soc_spdif,snd_soc_tegra_utils,snd_soc_tegra_alc5632\nsnd_pcm_oss            42008  0 \nsnd_mixer_oss          14157  1 snd_pcm_oss\nsnd_seq                57499  6 snd_seq_midi_event,snd_seq_midi,snd_seq_oss,snd_seq_dummy\nsnd_pcm                70743  3 snd_pcm_oss,snd_soc_core,snd_soc_tegra_pcm\njoydev                  8806  0 \nsnd_seq_device          5587  5 snd_seq,snd_rawmidi,snd_seq_midi,snd_seq_oss,snd_seq_dummy\nsnd_page_alloc          5151  1 snd_pcm\nlm90                   11570  0 \nhwmon                   1427  1 lm90\nsnd_timer              17979  2 snd_pcm,snd_seq\nsnd                    49946  14 snd_timer,snd_seq_device,snd_pcm,snd_seq,snd_mixer_oss,snd_pcm_oss,snd_soc_core,snd_rawmidi,snd_seq_midi,snd_seq_oss,snd_seq_dummy,snd_soc_tegra_utils", 
+    "uname": "Linux hecke 3.1.10-7-ac100 #14-Ubuntu SMP Mon Apr 8 17:50:30 UTC 2013 armv7l armv7l armv7l GNU/Linux", 
+    "os-release": "NAME=\"Ubuntu\"\nVERSION=\"13.10, Saucy Salamander\"\nID=ubuntu\nID_LIKE=debian\nPRETTY_NAME=\"Ubuntu 13.10\"\nVERSION_ID=\"13.10\"\nHOME_URL=\"http://www.ubuntu.com/\"\nSUPPORT_URL=\"http://help.ubuntu.com/\"\nBUG_REPORT_URL=\"http://bugs.launchpad.net/ubuntu/\"", 
+    "lspci": ""
+  }, 
+  "backlight": {
+    "pwm-backlight": {
+      "type": "raw", 
+      "max_brightness": 255, 
+      "actual_brightness": 224, 
+      "brightness": 224
+    }
+  }
+}
