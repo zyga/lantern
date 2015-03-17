@@ -32,10 +32,10 @@ def main():
     stat_fns = ("mean", "median", "median_low", "median_high",
                 "median_grouped", "mode", "pstdev", "pvariance", "stdev",
                 "variance",)
-    for item in sorted(os.listdir('submissions')):
+    for item in sorted(os.listdir('submissions-v1')):
         if not item.endswith('.json'):
             continue
-        filename = os.path.join('submissions', item)
+        filename = os.path.join('submissions-v1', item)
         with open(filename, 'rt', encoding='UTF-8') as stream:
             data = json.load(stream)
         try:
