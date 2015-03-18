@@ -21,6 +21,8 @@ Community
 ---------
 
 - Personal page of an Intel engineer http://nikula.org/~jani/backlight/
+- XDC2014 presentation by Hans de Goede on "Backlight kernel ABI discussion https://www.youtube.com/watch?v=VO7nU3-MGMw
+- Article about backlight from a personal blog of Hans de Goede  http://hansdegoede.livejournal.com/13889.html
 - Lantern posts on my blog http://www.zygoon.pl/search/label/lantern
 
 TODO
