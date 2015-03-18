@@ -9,8 +9,8 @@ them directly in this repository.
 Resources
 =========
 
-Kernel
-------
+Kernel Documentation
+--------------------
 
 - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/ABI/stable/sysfs-class-backlight
 - https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/ABI/testing/sysfs-class-backlight-driver-adp8870
