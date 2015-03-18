@@ -6,6 +6,23 @@ situation of screen backlight support on Linux. Currently the project is in
 nascent state, collecting submissions created by lantern-collect and storing
 them directly in this repository.
 
+Resources
+=========
+
+Kernel
+------
+
+- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/ABI/stable/sysfs-class-backlight
+- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/ABI/testing/sysfs-class-backlight-driver-adp8870
+- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/ABI/testing/sysfs-class-backlight-driver-lm3533
+- https://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/acpi/video_extension.txt
+
+Community
+---------
+
+- Personal page of an Intel engineer http://nikula.org/~jani/backlight/
+- Lantern posts on my blog http://www.zygoon.pl/search/label/lantern
+
 TODO
 ====
 
